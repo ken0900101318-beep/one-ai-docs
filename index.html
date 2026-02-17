@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONE桌遊 AI 客服文件 - 私密文件</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        #login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        #login-container h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        #login-container p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        #password-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+        
+        #password-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        #login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        #login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        #login-btn:active {
+            transform: translateY(0);
+        }
+        
+        .error {
+            color: #e74c3c;
+            margin-top: 15px;
+            font-size: 14px;
+            display: none;
+        }
+        
+        #content-container {
+            display: none;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 1200px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        #content-container h1 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .doc-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .doc-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .doc-card h2 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .doc-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        #logout-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        #logout-btn:hover {
+            background: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <div id="login-container">
+        <h1>🔐 ONE桌遊 AI 客服文件</h1>
+        <p>私密文件，請輸入密碼</p>
+        <input type="password" id="password-input" placeholder="請輸入密碼" autocomplete="off">
+        <button id="login-btn" onclick="checkPassword()">解鎖文件</button>
+        <p class="error" id="error-msg">❌ 密碼錯誤，請重試</p>
+    </div>
+    
+    <div id="content-container">
+        <button id="logout-btn" onclick="logout()">登出</button>
+        <h1>📚 ONE桌遊 AI 客服文件庫</h1>
+        
+        <div class="doc-card" onclick="window.location.href='規則手冊.html'">
+            <h2>📋 ONE桌遊 AI 客服規則手冊</h2>
+            <p>完整技術文件 - 涵蓋 6 種 AI 角色、19 項優先級規則、10 個場景處理 SOP</p>
+            <p><strong>適合對象：</strong>開發者、管理者、培訓師</p>
+            <p><strong>檔案大小：</strong>10 KB</p>
+        </div>
+        
+        <div class="doc-card" onclick="window.location.href='推廣案例.html'">
+            <h2>💬 AI 客服推廣包 - 實戰案例</h2>
+            <p>推廣素材 - 真實對話範例、數據分析、ROI 計算、推廣策略</p>
+            <p><strong>適合對象：</strong>店家、老闆、業務</p>
+            <p><strong>檔案大小：</strong>6 KB</p>
+        </div>
+        
+        <p style="text-align: center; margin-top: 30px; color: #999; font-size: 14px;">
+            最後更新：2026-02-18 | 密碼保護版本
+        </p>
+    </div>
+    
+    <script>
+        const correctPassword = 'zxc88888';
+        
+        function checkPassword() {
+            const input = document.getElementById('password-input');
+            const error = document.getElementById('error-msg');
+            
+            if (input.value === correctPassword) {
+                document.getElementById('login-container').style.display = 'none';
+                document.getElementById('content-container').style.display = 'block';
+                sessionStorage.setItem('authenticated', 'true');
+            } else {
+                error.style.display = 'block';
+                input.value = '';
+                input.focus();
+            }
+        }
+        
+        function logout() {
+            sessionStorage.removeItem('authenticated');
+            document.getElementById('login-container').style.display = 'block';
+            document.getElementById('content-container').style.display = 'none';
+            document.getElementById('password-input').value = '';
+        }
+        
+        // 按 Enter 鍵也可以登入
+        document.getElementById('password-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+        
+        // 檢查是否已登入
+        window.onload = function() {
+            if (sessionStorage.getItem('authenticated') === 'true') {
+                document.getElementById('login-container').style.display = 'none';
+                document.getElementById('content-container').style.display = 'block';
+            }
+        };
+    </script>
+</body>
+</html>
